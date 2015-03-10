@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Random String Generator</title>
+    <title>My Cool Site Thing</title>
   </head>
   <body>
     <h1>Random String Generator</h1>
     <button id="generate">Generate a String!</button>
     <div id="string"></div> 
-    <p id="ajax-text"</p>
-    <button id="cooljsonparty">Show elements of a .json file!</button>
-    <p id="ajax-json-text"</p>
+    <p id="ajax-text"></p>
+    <button id="cooljsonparty">Show elements of a .json file! This does nothing right now.</button>
+    <p id="ajax-json-text"></p>
+
+    <p>Piglatinify your name now!</p>
+    <form id="piglatin">
+      <label>First Name</label><input type="text" name="firstname">
+      <label>Last Name</label><input type="text" name="lastname">
+      <input type="submit" value="Piglatinify It"/>
+    </form>
+
+    <p>Your name in Pig Latin is:</p>
+    <p id="pigLatinName"></p>
+
+    <!--- SCRIPT TIME! -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>
   </body>
