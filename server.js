@@ -11,6 +11,8 @@ app.use(bodyparser.json()); //These two lines tell the express app to use the bo
 app.use(bodyparser.urlencoded({extended: true})); //...and give it some needed settings.
   //(it needs this to actually be able to decode the data coming in on a request.)
 
+var piglatinify = require("./lib/piglatinify.js"); //it's happily in its own file. it's free now. freeeeee
+//modular design patterns are cool!
 
 //The first parameter is the route, the second is the function. (Express, like jQuery, has language you'll need to learn.)
 // app.get('/', function(req, res){ //req, res means request and response. 
@@ -61,28 +63,6 @@ app.post("/piglatin", function(req, res) {
   res.json(piglatined);
 });
 
-function piglatinify(word) {
-  var wordArray = word.split('');
-  var letters;
-  var changedWord; //the pig-latinified word we return
-
-  //Is the first letter a vowel?
-  var vowelHash = {a: 1, e: 1, i: 1, o: 1, u: 1,
-                   A: 1, E: 1, I: 1, O: 1, U: 1};
-  //hasOwnProperty is the way you look up a property on an object! It *WILL NOT* go up the prototype chain!
-  if (vowelHash.hasOwnProperty(wordArray[0])) {
-    return word + "-hay";
-  }
-  //This avoids a huge switch-statement or if-checks. Just one hash, and one hash lookup!
-
-  //otherwise, it starts with a consonant
-  letters = wordArray.shift();
-  changedWord = wordArray.join("") + "-" + letters + "ay";
-  return changedWord;
-
-
-  return "hello";
-}
 
 /////////////////////END OF COOL EXPERIMENT ZONE/////////////////////////////
 
