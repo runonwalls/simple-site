@@ -9,7 +9,7 @@ $(document).ready(function() {
         //When the button gets clicked, go to the quote page and output (here) the response from THAT page.
         //Where to go...                     //and what to do when it gets there
         //The callback function we provide is our way of accessing the response to our ajax request.
-        $.get("http://localhost:3000/quote", function(response){
+        $.get("/quote", function(response){
           $("#ajax-text").text(response);
         });
 
@@ -21,8 +21,8 @@ $(document).ready(function() {
     ); // end .on
 
   $("#cooljsonparty").on("click",function(){
-      $.get("http://localhost:3000/hesitantthinking", function(response){
-        $("#ajax-json-text").text(response); //not working as intended right now :()
+      $.get("/hesitantthinking", function(response){
+        $("#ajax-json-text").text(response); //not working as intended right now :(
       });
     });
 
