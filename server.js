@@ -7,26 +7,37 @@ var port = process.env.PORT || 3000; //tells Express to listen for http requests
                                      //(unless we've set a different port in an environmental variable)
 
 //The first parameter is the route, the second is the function. (Express, like jQuery, has language you'll need to learn.)
-app.get('/', function(req, res){ //req, res means request and response. 
-  res.send("hello, universe"); //Our response is gonna send this string.
-});
+// app.get('/', function(req, res){ //req, res means request and response. 
+//   res.send("hello, universe"); //Our response is gonna send this string.
+// });
 
 //////////////////////////COOL EXPERIMENT ZONE///////////////////////////////
 var quotes = ["You say goodbye", "I say Hello", "Hello, Hello",
               "I don't know why you say goodbye, I say Hello",
               "Paul is dead", "Paul is totally not dead, honest"];
+
+var thoughts = [{setup: "Hmm", punchline: "hmmmmmmmm"},
+             {setup: "Hmm2", punchline: "hmmmmmmmm2"},
+             {setup: "Hmm3", punchline: "hmmmmmmmm3"}];
+//__dirname is shorthand for "whatever directory we're in, start here"
+//static is a thing that comes with express! Tells it that we'll be serving files from the /app/ folder
+app.use(express.static(__dirname + "/app/"));
+
+
+app.get('/', function(req, res){
+  res.sendFile("index.html");
+});
+
+
 app.get('/quote', function(req, res){
   var randomIndex = Math.floor(Math.random() * quotes.length);
   res.send(quotes[randomIndex]);
 });
 
-//app.get('/secretbox', function(req, res){
-//  res.sendfle('./secretbox.jpg');
-//});
+app.get('/secretbox', function(req, res){
+  res.sendFile(__dirname + '/secretbox.jpg'); //Since we didn't specify we were serving files from our native directory
+});
 
-var thoughts = [{setup: "Hmm", punchline: "hmmmmmmmm"},
-             {setup: "Hmm2", punchline: "hmmmmmmmm2"},
-             {setup: "Hmm3", punchline: "hmmmmmmmm3"}];
 app.get('/hesitantthinking', function(req, res){
   var randomIndex = Math.floor(Math.random() * thoughts.length);
   res.json(thoughts[randomIndex]);
@@ -39,3 +50,5 @@ app.listen(port, function(){
   console.log('server started on port ' + port);
 }); //Starts a server on our local machine at port 3000. That means, to talk to the server, you use the address http://localhost:3000
 
+//Ajax: Short for Asynchronous Javascript and XML
+//$.get(url) //send a GET request to the endpoint at url, via ajax
