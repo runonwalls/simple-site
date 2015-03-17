@@ -9,7 +9,7 @@ $(document).ready(function() {
         //When the button gets clicked, go to the quote page and output (here) the response from THAT page.
         //Where to go...                     //and what to do when it gets there
         //The callback function we provide is our way of accessing the response to our ajax request.
-        $.get("/quote", function(response){
+        $.get("/quote", function(response) {
           $("#ajax-text").text(response);
         });
 
@@ -20,9 +20,16 @@ $(document).ready(function() {
       } // end function
     ); // end .on
 
-  $("#cooljsonparty").on("click",function(){
-      $.get("/hesitantthinking", function(response){
-        $("#ajax-json-text").text(response); //not working as intended right now :(
+  $("#cooljsonparty").on("click", function() {
+      $.get("/hesitantthinking", function(response) {
+        $("#ajax-json-text").text(JSON.stringify(response));
+      });
+    });
+
+  $("#newbuttonnames").on("click", function() {
+      $.get("/buttonnames", function(response) {
+        $("#generate").text(response.button1);
+        $("#cooljsonparty").text(response.button2);
       });
     });
 
@@ -48,6 +55,27 @@ $(document).ready(function() {
     $.post("piglatin", name, function(response) {
       var pigLatinName = response.firstname + " " + response.lastname;
       $("#pigLatinName").text(pigLatinName);
+    });
+  });
+
+  //Our event handler, that fires when the form is submitted
+  $("#yesorno").on("submit", function(e) {
+    e.preventDefault();
+
+    var myQuestion = $("input[name=question]").val(); //val grabs the input data from that field
+
+    var question = { question: myQuestion };
+
+    //("piglatin" is the route on our server. we don't app.get that route, but we DO app.post,
+      //meaning that when we post to it, the app.post("/piglatin") in server.js will run,
+      //getting the data we sent!)
+    $.post("yesorno", question, function(response) {
+      if (response.yesorno === true)
+      {
+        $("#theanswer").text("Yes!");
+      } else {
+        $("#theanswer").text("Absolutely not.");
+      }
     });
   });
 
